@@ -1,0 +1,43 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="
+	http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd
+	http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-2.0.xsd
+	http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.0.xsd
+	http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.0.xsd
+	http://www.springframework.org/schema/context 
+    http://www.springframework.org/schema/context/spring-context-2.5.xsd">
+	
+	<bean id="Student" class="com.pojo.Student">
+		<property name="stuid" value="3"></property>
+		<property name="stuname" value="李四"></property>
+		<property name="loves">
+			<list>
+				<value>吃</value>
+				<value>喝</value>
+				<value>玩</value>
+				<value>乐</value>
+			</list>
+		</property>
+		
+		<property name="others">
+			<map>
+				<entry key="age" value="18"></entry>
+				<entry key="height" value="180"></entry>
+			</map>
+		</property>
+	</bean>
+	
+	<bean id="StudentDAO" class="com.dao.StudentDAO"></bean>
+	
+	<bean id="StudentService" class="com.service.StudentService">
+		<property name="studentDAO" ref="StudentDAO"></property>
+	</bean>
+	
+</beans>
