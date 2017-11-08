@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:p="http://www.springframework.org/schema/p"
+    xsi:schemaLocation="
+        http://www.springframework.org/schema/beans 
+        http://www.springframework.org/schema/beans/spring-beans.xsd">
+	
+  <bean id="customerDao" class="com.itheima.demo1.CustomerDao" />
+  <!-- 为什么下面这样写会报错 ，而下面的下面却不会报错-->
+  <!--  
+	  <bean id="customerService" class="com.itheima.demo1.CustomerService">	
+	  	<property name="customerDao1" ref="customerDao" />
+	  </bean>
+  -->
+  <bean id="customerService" class="com.itheima.demo1.CustomerService">	
+  	<property name="customerDao" ref="customerDao" />
+  </bean>
+  
+  <bean id="car" class="com.itheima.demo2.Car">
+  	<property name="price" value="888"></property>
+  	<property name="name" value="奥迪"></property>
+  </bean>
+  
+  <bean id="person" class="com.itheima.demo2.Person">
+  	<!-- 
+  		1. 采用构造方法进行第一次赋值
+  	<constructor-arg name="name" value="小妹"></constructor-arg>
+  	<constructor-arg name="car" ref="car"></constructor-arg>
+  	 -->
+  	 <!-- 采用构造方法进行第二次赋值 -->
+  	 <constructor-arg index="0" value="小妹"></constructor-arg>
+  	 <constructor-arg index="1" ref="car"></constructor-arg>
+  </bean>
+  
+  <!-- 采用名称空间p的属性注入方式进行属性的赋值 -->
+  <bean id="car2" class="com.itheima.demo3.Car" p:name="小汽车" p:price="888" />
+  <bean id="person2" class="com.itheima.demo3.Person" p:name="王思聪" p:car-ref="car2" />
+  
+  <!-- 采用spel表达式进行属性的赋值 -->
+  <bean id="car3" class="com.itheima.demo4.Car" >
+  	<property name="name" value="#{'法拉利'}"></property>
+  	<property name="price" value="#{789}"></property>
+  </bean>
+  <bean id="person3" class="com.itheima.demo4.Person">
+  	<property name="name" value="#{'吴晓文'}" />
+  	<property name="car" value="#{car3}"/>
+  	<property name="price" value="#{car3.hello()}"/>
+  </bean>
+  
+  <!-- 对集合进行配置 -->
+  <bean id="car4" class="com.itheima.demo5.Car">
+  	<property name="name" value="#{'法拉利'}"></property>
+  	<property name="price" value="#{789}"></property>
+  </bean>
+  <bean id="person4" class="com.itheima.demo5.Person">
+  	<property name="name" value="逸如风"/>
+  	<property name="loves">
+  		<list>
+  			<value>吃</value>
+  			<value>喝</value>
+  		</list>
+  	</property>
+  	<property name="cars">
+  		<list>
+  			<ref bean="car4"/>
+  		</list>
+  	</property>
+  	<property name="maps">
+  		<map>
+  			<entry key="age" value="20"></entry>
+  		</map>
+  	</property>
+  	<property name="props">
+  		<props>
+  			<prop key="username">root</prop>
+  			<prop key="password">root</prop>
+  		</props>
+  	</property>
+  </bean>
+  
+  <bean id="userDao" class="com.itheima.demo6.UserDao" />
+  <bean id="userService" class="com.itheima.demo6.UserService">
+  	<property name="userDao" ref="userDao" />
+  </bean>
+  <!-- 导入另一个配置文件·
+		<import resource="相对路径">  
+   -->
+</beans>
